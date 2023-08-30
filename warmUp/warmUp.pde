@@ -4,6 +4,7 @@ float d;
 float smallR;
 float shift;
 float theta;
+float omega;
 void setup() {
   size(800,800);
 }
@@ -20,7 +21,7 @@ void draw() {
   vertex(width/2-200*sin(4*PI/5), height/2-200*cos(4*PI/5));
   vertex(width/2-200*sin(6*PI/5), height/2-200*cos(6*PI/5));
   vertex(width/2-200*sin(8*PI/5), height/2-200*cos(8*PI/5));
-  fill(200,0,100);
+  fill(200,0, 100);
   endShape(CLOSE);
   
   int counter = 4;
@@ -35,6 +36,7 @@ void drawSmall(int counter, float diameter, float smallRadius, float xC, float y
     return;
   }
   counter--;
+  omega = theta - 2*PI/5;
   theta += 2*PI/5;
   for (int i = 0; i < 5; i++) {
     beginShape();
@@ -43,11 +45,11 @@ void drawSmall(int counter, float diameter, float smallRadius, float xC, float y
     vertex(xC+diameter*sin(i*theta)-smallRadius*sin(4*PI/5), yC+diameter*cos(i*theta)-smallRadius*cos(4*PI/5));
     vertex(xC+diameter*sin(i*theta)-smallRadius*sin(6*PI/5), yC+diameter*cos(i*theta)-smallRadius*cos(6*PI/5));
     vertex(xC+diameter*sin(i*theta)-smallRadius*sin(8*PI/5), yC+diameter*cos(i*theta)-smallRadius*cos(8*PI/5));
-    fill(0,225,115);
+    fill(0, 225, 115);
     endShape(CLOSE);
   }
   
   for (int j = 0; j < 5; j++) {
-    drawSmall(counter, diameter/2.0, smallRadius/2.0, xC+diameter*sin(j*theta), yC+diameter*cos(j*theta), theta);
+    drawSmall(counter, diameter/2.0, smallRadius/2.0, xC+diameter*sin(j*omega), yC+diameter*cos(j*omega), theta);
   }
 }
