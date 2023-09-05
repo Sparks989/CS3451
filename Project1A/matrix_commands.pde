@@ -2,9 +2,13 @@
 
 // You should modify the routines below to complete the assignment.
 // Feel free to define any classes, global variables, and helper routines that you need.
+int [][] C = {{1,0,0},
+             {0,1,0},
+             {0,0,1}};
 
 void Init_Matrix()
 {
+  
 }
 
 void Push_Matrix()
