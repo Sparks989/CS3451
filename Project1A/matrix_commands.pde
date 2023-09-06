@@ -12,19 +12,26 @@ float[][] I = {{1,0,0,0},
                {0,0,1,0},
                {0,0,0,1}};
              
-float [][][] matrixStack = {{},{},{},{},{}};
+ArrayList<float[][]> matrixStack = new ArrayList<float[][]>();
 int currentTop = 0;
 
 void Init_Matrix()
 {
-    matrixStack[0] = I;
+    currentTop = 0;
+    matrixStack.add(I);
+    C = matrixStack.get(currentTop);
+    
 }
 
 void Push_Matrix()
 {
-  matrixStack[currentTop+1] = I;
+  
+  float [][] oldTop = new float[4][4];
+  oldTop = matrixStack.get(currentTop).clone();
+
+  matrixStack.add(oldTop);
   currentTop++;
-  C = matrixStack[currentTop];
+  C = matrixStack.get(currentTop);
 }
 
 void Pop_Matrix()
@@ -32,9 +39,9 @@ void Pop_Matrix()
   if (currentTop == 0) {
     println("Error: Cannot pop the matrix stack");
   } else {
-    matrixStack[currentTop] = I;
+    matrixStack.remove(currentTop);
     currentTop--;
-    C = matrixStack[currentTop];
+    C = matrixStack.get(currentTop);
   }
 }
 
@@ -74,14 +81,19 @@ float[][] MatrixMultiply(float [][] m1, float [][] m2) {
   return resultMatrix;
 }
 
+void matrixStackSetter(float[][] m) {
+  matrixStack.remove(currentTop);
+  matrixStack.add(m);
+}
+
 void Translate(float x, float y, float z)
 {
   float [][] translateMatrix = {{1,0,0,x},
                                 {0,1,0,y},
                                 {0,0,1,z},
                                 {0,0,0,1}};
-                                 
-  matrixStack[currentTop] = MatrixMultiply(translateMatrix,matrixStack[currentTop]);
+                                
+  C = MatrixMultiply(C,translateMatrix);
 }
 
 void Scale(float x, float y, float z)
@@ -91,35 +103,38 @@ void Scale(float x, float y, float z)
                             {0,0,z,0},
                             {0,0,0,1}};
                             
-  matrixStack[currentTop] = MatrixMultiply(scaleMatrix, matrixStack[currentTop]);
+  matrixStackSetter(MatrixMultiply(C,scaleMatrix));
 }
 
 void RotateX(float theta)
 {
+  theta = theta*PI/180.0;
   float [][] xRotateMatrix = {{1,0,0,0},
                               {0,cos(theta),-sin(theta),0},
                               {0,sin(theta),cos(theta),0},
                               {0,0,0,1}};
                 
-  C = MatrixMultiply(xRotateMatrix, C);
+  matrixStackSetter(MatrixMultiply(C,xRotateMatrix));
 }
 
 void RotateY(float theta)
 {
+  theta = theta*PI/180.0;
   float [][] yRotateMatrix = {{cos(theta),0,sin(theta),0},
                               {0,1,0,0},
                               {-sin(theta),0,cos(theta),0},
                               {0,0,0,1}};
                 
-  C = MatrixMultiply(yRotateMatrix, C);
+  matrixStackSetter(MatrixMultiply(C,yRotateMatrix));
 }
 
 void RotateZ(float theta)
 {
+  theta = theta*PI/180.0;
   float [][] zRotateMatrix = {{0,cos(theta),-sin(theta),0},
                               {0,sin(theta),cos(theta),0},
                               {0,0,1,0},
                               {0,0,0,1}};
                 
-  C = MatrixMultiply(zRotateMatrix, C);
+  matrixStackSetter(MatrixMultiply(C,zRotateMatrix));
 }
