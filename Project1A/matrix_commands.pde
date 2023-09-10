@@ -2,10 +2,7 @@
 
 // You should modify the routines below to complete the assignment.
 // Feel free to define any classes, global variables, and helper routines that you need.
-float [][] C = {{1,0,0,0},
-                {0,1,0,0},
-                {0,0,1,0},
-                {0,0,0,1}};
+float [][] C = new float[4][4];
              
 float[][] I = {{1,0,0,0},
                {0,1,0,0},
@@ -14,11 +11,17 @@ float[][] I = {{1,0,0,0},
              
 ArrayList<float[][]> matrixStack = new ArrayList<float[][]>();
 int currentTop = 0;
+boolean pushCalled;
 
 void Init_Matrix()
 {
+    matrixStack = new ArrayList<float[][]>();
     currentTop = 0;
-    matrixStack.add(I);
+    float[][] Identity = {{1,0,0,0},
+               {0,1,0,0},
+               {0,0,1,0},
+               {0,0,0,1}};
+    matrixStack.add(Identity);
     C = matrixStack.get(currentTop);
     
 }
@@ -27,7 +30,11 @@ void Push_Matrix()
 {
   
   float [][] oldTop = new float[4][4];
-  oldTop = matrixStack.get(currentTop).clone();
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      oldTop[i][j] = matrixStack.get(currentTop)[i][j];
+    }
+  }
 
   matrixStack.add(oldTop);
   currentTop++;
@@ -56,35 +63,36 @@ void Print_CTM()
   println();
 }
 
-float[][] MatrixMultiply(float [][] m1, float [][] m2) {
-  float[][] resultMatrix = I;
-  resultMatrix[0][0] = m1[0][0]*m2[0][0]+m1[1][0]*m2[0][1]+m1[2][0]*m2[0][2]+m1[3][0]*m2[0][3];
-  resultMatrix[1][0] = m1[0][0]*m2[1][0]+m1[1][0]*m2[1][1]+m1[2][0]*m2[1][2]+m1[3][0]*m2[1][3];
-  resultMatrix[2][0] = m1[0][0]*m2[2][0]+m1[1][0]*m2[2][1]+m1[2][0]*m2[2][2]+m1[3][0]*m2[2][3];
-  resultMatrix[3][0] = m1[0][0]*m2[3][0]+m1[1][0]*m2[3][1]+m1[2][0]*m2[3][2]+m1[3][0]*m2[3][3];
+void MatrixMultiply(float [][] m1, float [][] m2) {
+  float[][] resultMatrix = new float[4][4];
+  resultMatrix[0][0] = m1[0][0]*m2[0][0]+m1[0][1]*m2[1][0]+m1[0][2]*m2[2][0]+m1[0][3]*m2[3][0];
+  resultMatrix[0][1] = m1[0][0]*m2[0][1]+m1[0][1]*m2[1][1]+m1[0][2]*m2[2][1]+m1[0][3]*m2[3][1];
+  resultMatrix[0][2] = m1[0][0]*m2[0][2]+m1[0][1]*m2[1][2]+m1[0][2]*m2[2][2]+m1[0][3]*m2[3][2];
+  resultMatrix[0][3] = m1[0][0]*m2[0][3]+m1[0][1]*m2[1][3]+m1[0][2]*m2[2][3]+m1[0][3]*m2[3][3];
   
-  resultMatrix[0][1] = m1[0][1]*m2[0][0]+m1[1][1]*m2[0][1]+m1[2][1]*m2[0][2]+m1[3][1]*m2[0][3];
-  resultMatrix[1][1] = m1[0][1]*m2[1][0]+m1[1][1]*m2[1][1]+m1[2][1]*m2[1][2]+m1[3][1]*m2[1][3];
-  resultMatrix[2][1] = m1[0][1]*m2[2][0]+m1[1][1]*m2[2][1]+m1[2][1]*m2[2][2]+m1[3][1]*m2[2][3];
-  resultMatrix[3][1] = m1[0][1]*m2[3][0]+m1[1][1]*m2[3][1]+m1[2][1]*m2[3][2]+m1[3][1]*m2[3][3];
+  resultMatrix[1][0] = m1[1][0]*m2[0][0]+m1[1][1]*m2[1][0]+m1[1][2]*m2[2][0]+m1[1][3]*m2[3][0];
+  resultMatrix[1][1] = m1[1][0]*m2[0][1]+m1[1][1]*m2[1][1]+m1[1][2]*m2[2][1]+m1[1][3]*m2[3][1];
+  resultMatrix[1][2] = m1[1][0]*m2[0][2]+m1[1][1]*m2[1][2]+m1[1][2]*m2[2][2]+m1[1][3]*m2[3][2];
+  resultMatrix[1][3] = m1[1][0]*m2[0][3]+m1[1][1]*m2[1][3]+m1[1][2]*m2[2][3]+m1[1][3]*m2[3][3];
   
-  resultMatrix[0][2] = m1[0][2]*m2[0][0]+m1[1][2]*m2[0][1]+m1[2][2]*m2[0][2]+m1[3][2]*m2[0][3];
-  resultMatrix[1][2] = m1[0][2]*m2[1][0]+m1[1][2]*m2[1][1]+m1[2][2]*m2[1][2]+m1[3][2]*m2[1][3];
-  resultMatrix[2][2] = m1[0][2]*m2[2][0]+m1[1][2]*m2[2][1]+m1[2][2]*m2[2][2]+m1[3][2]*m2[2][3];
-  resultMatrix[3][2] = m1[0][2]*m2[3][0]+m1[1][2]*m2[3][1]+m1[2][2]*m2[3][2]+m1[3][2]*m2[3][3];
+  resultMatrix[2][0] = m1[2][0]*m2[0][0]+m1[2][1]*m2[1][0]+m1[2][2]*m2[2][0]+m1[2][3]*m2[3][0];
+  resultMatrix[2][1] = m1[2][0]*m2[0][1]+m1[2][1]*m2[1][1]+m1[2][2]*m2[2][1]+m1[2][3]*m2[3][1];
+  resultMatrix[2][2] = m1[2][0]*m2[0][2]+m1[2][1]*m2[1][2]+m1[2][2]*m2[2][2]+m1[2][3]*m2[3][2];
+  resultMatrix[2][3] = m1[2][0]*m2[0][3]+m1[2][1]*m2[1][3]+m1[2][2]*m2[2][3]+m1[2][3]*m2[3][3];
   
-  resultMatrix[0][3] = m1[0][3]*m2[0][0]+m1[1][3]*m2[0][1]+m1[2][3]*m2[0][2]+m1[3][3]*m2[0][3];
-  resultMatrix[1][3] = m1[0][3]*m2[1][0]+m1[1][3]*m2[1][1]+m1[2][3]*m2[1][2]+m1[3][3]*m2[1][3];
-  resultMatrix[2][3] = m1[0][3]*m2[2][0]+m1[1][3]*m2[2][1]+m1[2][3]*m2[2][2]+m1[3][3]*m2[2][3];
-  resultMatrix[3][3] = m1[0][3]*m2[3][0]+m1[1][3]*m2[3][1]+m1[2][3]*m2[3][2]+m1[3][3]*m2[3][3];
+  resultMatrix[3][0] = m1[3][0]*m2[0][0]+m1[3][1]*m2[1][0]+m1[3][2]*m2[2][0]+m1[3][3]*m2[3][0];
+  resultMatrix[3][1] = m1[3][0]*m2[0][1]+m1[3][1]*m2[1][1]+m1[3][2]*m2[2][1]+m1[3][3]*m2[3][1];
+  resultMatrix[3][2] = m1[3][0]*m2[0][2]+m1[3][1]*m2[1][2]+m1[3][2]*m2[2][2]+m1[3][3]*m2[3][2];
+  resultMatrix[3][3] = m1[3][0]*m2[0][3]+m1[3][1]*m2[1][3]+m1[3][2]*m2[2][3]+m1[3][3]*m2[3][3];
   
-  return resultMatrix;
+  for (int i = 0; i < 4; i++) {
+    for (int j =0; j < 4; j++) {
+      C[i][j] = resultMatrix[i][j];
+    }
+  }
+  
 }
 
-void matrixStackSetter(float[][] m) {
-  matrixStack.remove(currentTop);
-  matrixStack.add(m);
-}
 
 void Translate(float x, float y, float z)
 {
@@ -92,8 +100,8 @@ void Translate(float x, float y, float z)
                                 {0,1,0,y},
                                 {0,0,1,z},
                                 {0,0,0,1}};
-                                
-  C = MatrixMultiply(C,translateMatrix);
+  
+  MatrixMultiply(C,translateMatrix);
 }
 
 void Scale(float x, float y, float z)
@@ -103,7 +111,7 @@ void Scale(float x, float y, float z)
                             {0,0,z,0},
                             {0,0,0,1}};
                             
-  matrixStackSetter(MatrixMultiply(C,scaleMatrix));
+  MatrixMultiply(C,scaleMatrix);
 }
 
 void RotateX(float theta)
@@ -114,7 +122,7 @@ void RotateX(float theta)
                               {0,sin(theta),cos(theta),0},
                               {0,0,0,1}};
                 
-  matrixStackSetter(MatrixMultiply(C,xRotateMatrix));
+  MatrixMultiply(C,xRotateMatrix);
 }
 
 void RotateY(float theta)
@@ -125,7 +133,7 @@ void RotateY(float theta)
                               {-sin(theta),0,cos(theta),0},
                               {0,0,0,1}};
                 
-  matrixStackSetter(MatrixMultiply(C,yRotateMatrix));
+  MatrixMultiply(C,yRotateMatrix);
 }
 
 void RotateZ(float theta)
@@ -136,5 +144,5 @@ void RotateZ(float theta)
                               {0,0,1,0},
                               {0,0,0,1}};
                 
-  matrixStackSetter(MatrixMultiply(C,zRotateMatrix));
+  MatrixMultiply(C,zRotateMatrix);
 }

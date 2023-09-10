@@ -77,6 +77,13 @@ void mat_test() {
   Scale (4, 2, 0.5);
   Translate (2, -2, 10);
   Print_CTM();
+  
+  for (int i = 0; i < 4; i++) {
+    for (int j =0; j < 4; j++) {
+      print(I[i][j]);
+    }
+    println();
+  }
 }
 
 void draw() {}
