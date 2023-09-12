@@ -11,7 +11,6 @@ float[][] I = {{1,0,0,0},
              
 ArrayList<float[][]> matrixStack = new ArrayList<float[][]>();
 int currentTop = 0;
-boolean pushCalled;
 
 void Init_Matrix()
 {
