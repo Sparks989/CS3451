@@ -9,6 +9,24 @@ void draw() {
   // unused in this program because we only want to draw with keyboard input
 }
 
+class point {
+  float currX;
+  float currY;
+  float currZ;
+  
+  float getCurrX() {
+    return currX;
+  }
+  
+  float getCurrY() {
+    return currY;
+  }
+  
+  float getCurrZ() {
+    return currZ;
+  }
+}
+
 /******************************************************************************
 When key is pressed, call one of the test cases.
 ******************************************************************************/

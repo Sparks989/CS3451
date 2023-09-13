@@ -13,6 +13,8 @@ float[][] I = {{1,0,0,0},
 ArrayList<float[][]> matrixStack = new ArrayList<float[][]>();
 int currentTop = 0;
 
+
+
 void Init_Matrix()
 {
   matrixStack = new ArrayList<float[][]>();
@@ -148,13 +150,27 @@ void Perspective(float f, float near, float far) {
 }
 
 void Ortho(float l, float r, float b, float t, float n, float f) {
+  
 }
 
 void Begin_Shape() {
+  point.setCurrX = 0;
+  currY = 0;
+  currZ = 0;
 }
 
 void Vertex(float x, float y, float z) {
+  line(point.currX, point.getCurrY(), point.getCurrZ(), x, y, z);
+  currX = x;
+  currY = y;
+  currZ = z;
 }
 
 void End_Shape() {
+  prevX = currX;
+  prevY = currY;
+  prevZ = currZ;
+  currX = 0;
+  currY = 0;
+  currZ = 0;
 }
