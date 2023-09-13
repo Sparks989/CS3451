@@ -13,18 +13,7 @@ class point {
   float currX;
   float currY;
   float currZ;
-  
-  float getCurrX() {
-    return currX;
-  }
-  
-  float getCurrY() {
-    return currY;
-  }
-  
-  float getCurrZ() {
-    return currZ;
-  }
+
 }
 
 /******************************************************************************
