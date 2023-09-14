@@ -165,9 +165,8 @@ void Vertex(float x, float y, float z) {
                          {0, instance.currY, 0},
                          {0,0, instance.currZ}};
   MatrixMultiply(C, transform);
-  instance.currX = x;
-  instance.currY = y;
-  instance.currZ = z;
+  
+  
 }
 
 void End_Shape() {
