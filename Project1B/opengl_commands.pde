@@ -12,6 +12,7 @@ float[][] I = {{1,0,0,0},
              
 ArrayList<float[][]> matrixStack = new ArrayList<float[][]>();
 int currentTop = 0;
+ArrayList<float[]> pointArray = new ArrayList<float[]>();
 
 point instance = new point();
 
@@ -155,14 +156,15 @@ void Ortho(float l, float r, float b, float t, float n, float f) {
 }
 
 void Begin_Shape() {
-  
-  instance.currX = 0;
-  instance.currY = 0;
-  instance.currZ = 0;
+  float[] start = {1,1};
+  pointArray.add(start);
 }
 
 void Vertex(float x, float y, float z) {
-  line(instance.currX, instance.currY, instance.currZ, x, y, z);
+  float[][] transform = {{instance.currX, 0, 0},
+                         {0, instance.currY, 0},
+                         {0,0, instance.currZ}};
+  MatrixMultiply(C, transform);
   instance.currX = x;
   instance.currY = y;
   instance.currZ = z;
@@ -172,4 +174,5 @@ void End_Shape() {
   instance.currX = 0;
   instance.currY = 0;
   instance.currZ = 0;
+  line(instance.currX, instance.currY, instance.currZ, x, y);
 }
