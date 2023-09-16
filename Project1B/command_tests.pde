@@ -9,13 +9,6 @@ void draw() {
   // unused in this program because we only want to draw with keyboard input
 }
 
-class point {
-  float currX;
-  float currY;
-  float currZ;
-
-}
-
 /******************************************************************************
 When key is pressed, call one of the test cases.
 ******************************************************************************/
