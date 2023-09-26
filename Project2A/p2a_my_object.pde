@@ -18,7 +18,7 @@ void draw() {
   perspective (PI * 0.333, 1.0, 0.01, 1000.0);
 
   // place the camera in the scene
-  camera ((time*20.0)%200, 0, 200.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
+  camera (0, 0, 200.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
   
   // create an ambient light source
   ambientLight (102, 102, 102);
@@ -28,7 +28,10 @@ void draw() {
   directionalLight (102, 102, 102, -0.7, -0.7, -1);
   directionalLight (152, 152, 152, 0, 0, -1);
 
+  pushMatrix();
+  rotateY(time);
   drawPerson();
+  popMatrix();
 
   // step forward the time
   time += 0.03;
