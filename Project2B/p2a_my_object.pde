@@ -25,12 +25,15 @@ void draw() {
   }
   
   // create an ambient light source
-  ambientLight (102, 102, 102);
+  if (time < 30) {
+    ambientLight (102, 102, 102);
+    lightSpecular (204, 204, 204);
+    directionalLight (102, 0, 102, 0, 0, -200);
+  }
 
-  // create two directional light sources
-  lightSpecular (204, 204, 204);
-  directionalLight (102, 0, 102, 0, 0, -200);
-  if (time >= 10) {
+
+  
+  if (time >= 10 && time < 35) {
     directionalLight(150, 102, 0, -2, 3, 20);
     directionalLight(150, 102, 0, 2, 3, 20);
   }
@@ -38,10 +41,36 @@ void draw() {
 
   pushMatrix();
   translate(0,-80,0);
-  if (time > 15 && time < 50) {
-    translate(0, 0, time*10.0);
+  if (time > 25 && time < 35) {
+    translate(0, 0, time*5.0);
   }
-  drawPerson();
+  if (time > 15 && time < 45) {
+    pushMatrix();
+    translate(60,0,-50);
+    drawPerson();
+    popMatrix();
+    pushMatrix();
+    translate(-60,0,-50);
+    drawPerson();
+    popMatrix();
+  }
+  if (time > 20 && time < 40) {
+    pushMatrix();
+    translate(0,0,-100);
+    drawPerson();
+    popMatrix();
+    pushMatrix();
+    translate(-90,0,-100);
+    drawPerson();
+    popMatrix();
+    pushMatrix();
+    translate(90,0,-100);
+    drawPerson();
+    popMatrix();
+  }
+  if (time < 50) {
+    drawPerson();
+  }
   popMatrix();
 
   // step forward the time
@@ -79,6 +108,10 @@ void drawPerson() {
   specular (155, 155, 155);
   shininess (5.0);
   
+  if (time > 17 && time < 35) {
+    rotate(time);
+  }
+  
   sphereDetail(40);
   sphere(10);
   
@@ -89,6 +122,10 @@ void drawPerson() {
   ambient (50, 50, 50);
   specular (155, 155, 155);
   shininess (5.0);
+  
+  if (time > 17 && time < 35) {
+    rotate(time);
+  }
   
   scale(.9,1.2,1);
   translate(0,2,1);
