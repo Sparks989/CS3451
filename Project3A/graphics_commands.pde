@@ -35,7 +35,7 @@ void End_Shape() {
   
   for (int y = ceil(yMin); y < yMax; y++) {
     for (int x = ceil(xLeft); x < xRight; x++) {
-      set(x, y, currColor
+      set(x, y, currColor);
     }
     xLeft += dxLeft;
     xRight += dxRight;
